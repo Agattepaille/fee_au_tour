@@ -18,19 +18,19 @@ const {
         </div>
 
         <!-- Bloc image -->
-        <div class="w-full md:w-1/2 grid grid-cols-2 gap-4 content-center items-center">
-            <img
-                    src={image1}
-                    alt={alt1}
-                    class="w-full h-[400px]  object-cover shadow-md"
-                    loading="lazy"
-            />
-            <img
-                    src={image2}
-                    alt={alt2}
-                    class="w-full h-[400px]  object-cover shadow-md"
-                    loading="lazy"
-            />
+        <div class="w-full md:w-1/2 flex flex-col items-center gap-4 relative">
+            <div class={`grid ${image2 ? 'grid-cols-2' : 'grid-cols-1'} gap-4 w-full`}>
+                <img src={image1} alt={alt1} class="w-full h-[400px] object-cover shadow-md" loading="lazy"/>
+                {image2 && (
+                        <img src={image2} alt={alt2} class="w-full h-[400px] object-cover shadow-md" loading="lazy"/>
+                )}
+            </div>
+
+            <!-- Flèches alignées horizontalement -->
+            <div class="w-full flex justify-between mt-2 px-1">
+                <img src="/polygon1.png" alt="défilement gauche" class="h-3"/>
+                <img src="/polygon2.png" alt="défilement droite" class="h-3"/>
+            </div>
         </div>
     </div>
 </section>
