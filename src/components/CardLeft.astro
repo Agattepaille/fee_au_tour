@@ -1,35 +1,79 @@
 ---
+import {Splide, SplideSlide} from 'astro-splide';
+import "@splidejs/splide/css";
+
 const {
     image1 = '/images/example1.jpg',
     image2,
-    alt1 = 'Illustration 1',
-    alt2 = 'Illustration 2',
+    image3,
+    image4,
+    alt1 = 'Image 1',
+    alt2 = 'Image 2',
+    alt3 = 'Image 3',
+    alt4 = 'Image 4',
     title = 'Titre de la section',
-    text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+    text = 'Lorem ipsum dolor sit amet...'
 } = Astro.props;
+
+const images = [
+    {src: image1, alt: alt1},
+    image2 && {src: image2, alt: alt2},
+    image3 && {src: image3, alt: alt3},
+    image4 && {src: image4, alt: alt4},
+].filter(Boolean);
+
+const isSingleImage = images.length === 1;
+
+const splideOptions = isSingleImage
+    ? {
+        type: 'slide',
+        arrows: false,
+        pagination: false,
+        autoplay: false,
+        perPage: 1,
+        gap: '0',
+        drag: false,
+    }
+    : {
+        type: 'loop',
+        perPage: 2,
+        breakpoints: {
+            1024: {perPage: 2},
+            640: {perPage: 1},
+        },
+        gap: '1rem',
+        autoplay: true,
+        interval: 4000,
+        pauseOnHover: true,
+        arrows: true,
+        pagination: true,
+    };
 ---
 
 <section class="w-full px-4 py-8 bg-white">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-12">
 
-        <!-- Bloc image -->
-        <div class="w-full md:w-1/2 flex flex-col items-center gap-4 relative">
-            <div class={`grid ${image2 ? 'grid-cols-2' : 'grid-cols-1'} gap-4 w-full`}>
-                <img src={image1} alt={alt1} class="w-full h-[400px] object-cover shadow-md" loading="lazy"/>
-                {image2 && (
-                        <img src={image2} alt={alt2} class="w-full h-[400px] object-cover shadow-md" loading="lazy"/>
-                )}
-            </div>
-
-            <!-- Flèches alignées horizontalement -->
-            <div class="w-full flex justify-between mt-2 px-1">
-                <img src="/polygon1.png" alt="défilement gauche" class="h-3"/>
-                <img src="/polygon2.png" alt="défilement droite" class="h-3"/>
-            </div>
+        <!-- Carrousel -->
+        <div class={`w-full md:${isSingleImage ? 'w-full' : 'w-2/3'}`}>
+            <Splide options={splideOptions} class="my-carousel" aria-label="Carrousel d'images">
+                {images.map(({src, alt}) => (
+                        <SplideSlide class={`bg-white flex items-center justify-center
+                        ${isSingleImage
+                            ? 'h-[65vh] md:h-[75vh] max-h-[800px]'
+                            : 'h-[50vh] md:h-[60vh] lg:h-[70vh] max-h-[700px]'
+                        }`}>
+                            <img
+                                    src={src}
+                                    alt={alt}
+                                    class={`w-full h-full ${isSingleImage ? 'object-contain' : 'object-cover'} rounded shadow-md`}
+                            />
+                        </SplideSlide>
+                ))}
+            </Splide>
         </div>
 
-        <!-- Bloc texte -->
-        <div class="w-full md:w-1/2 space-y-4">
+        <!-- Texte -->
+        <div class={`w-full md:${isSingleImage ? 'w-full' : 'w-1/3'} space-y-4`}>
             <h2 class="text-2xl md:text-3xl font-semibold text-gray-900">{title}</h2>
             <p class="text-gray-700 text-base md:text-lg leading-relaxed">{text}</p>
         </div>

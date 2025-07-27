@@ -1,21 +1,56 @@
 ---
+import {Splide, SplideSlide} from 'astro-splide';
+import '@splidejs/splide/css';
+
 const images = [
-    {src: '/src/assets/image1.jpg', alt: 'Image 1'},
-    {src: '/src/assets/image2.jpg', alt: 'Image 2'},
-    {src: '/src/assets/image3.jpg', alt: 'Image 3'},
+    {src: '/assets/image1.jpg', alt: 'Image 1'},
+    {src: '/assets/image2.jpg', alt: 'Image 2'},
+    {src: '/assets/image3.jpg', alt: 'Image 3'},
 ];
+
+const splideOptions = {
+    type: 'slide',
+    perPage: 1,
+    gap: '1rem',
+    pagination: true,
+    arrows: true,
+    breakpoints: {
+        768: {perPage: 1},
+        1024: {perPage: 1},
+    },
+};
 ---
-<section class="w-full h-1/2 flex flex-col justify-center items-center bg-white px-4 m-3">
-    <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
-        {images.map(({src, alt}) => (
-                <div class="w-full h-full overflow-hidden">
-                    <img
-                            src={src}
-                            alt={alt}
-                            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                            loading="lazy"
-                    />
-                </div>
-        ))}
+
+<section class="w-full py-6 bg-white px-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Desktop grid -->
+        <div class="hidden lg:grid grid-cols-3 gap-4">
+            {images.map(({src, alt}) => (
+                    <div class="w-full h-[70vh] max-h-[700px] overflow-hidden">
+                        <img
+                                src={src}
+                                alt={alt}
+                                class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                loading="lazy"
+                        />
+                    </div>
+            ))}
+        </div>
+
+        <!-- Mobile/tablette carousel -->
+        <div class="block lg:hidden">
+            <Splide options={splideOptions} aria-label="Carrousel d'images responsive">
+                {images.map(({src, alt}) => (
+                        <SplideSlide class="flex justify-center items-center h-[60vh] max-h-[500px] bg-white">
+                            <img
+                                    src={src}
+                                    alt={alt}
+                                    class="w-full h-full object-cover rounded shadow-md"
+                                    loading="lazy"
+                            />
+                        </SplideSlide>
+                ))}
+            </Splide>
+        </div>
     </div>
 </section>

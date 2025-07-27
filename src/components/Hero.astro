@@ -1,23 +1,42 @@
 <section
-        class="relative w-full min-h-screen bg-cover bg-center"
-        style="background-image: url('/hero_image_2.png')"
+        class="relative w-full h-[60vh] md:h-screen bg-cover bg-center"
+        style="background-image: url('/assets/hero_image_2.png')"
 >
     <!-- Overlay blanc semi-transparent -->
-    <div class="absolute inset-0 bg-white/50"></div>
+    <div class="absolute inset-0 bg-white/70"></div>
 
     <!-- Contenu du hero -->
-    <div class="relative z-10 flex flex-col justify-center items-left text_center px-6 py-24 h-full max-w-5xl mx-auto">
+    <div
+            class="relative z-10 flex flex-col justify-center items-start px-6 py-32 max-w-5xl mx-auto h-full"
+    >
         <!-- Titre -->
-        <h1 class="text-primary font-title text-4xl md:text-5xl lg:text-6xl xl:text-[72px] leading-tight tracking-tight mb-8">
+        <h1
+                class="text-primary font-serif text-4xl md:text-6xl lg:text-7xl leading-tight tracking-tight mb-6"
+        >
             Fée au tour
         </h1>
 
         <!-- Texte descriptif -->
-        <p class="text-text text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed font-sans max-w-3xl">
-      <span class="italic">
-        S'offrir un moment de détente hors du temps, loin de l'agitation dans une ambiance sereine et bienveillante.
-        L'argile en mode zen. Le plaisir simple de créer avec ses mains.
-      </span>
+        <p
+                class="text-primary-darker max-w-3xl text-lg md:text-xl leading-relaxed italic font-serif"
+        >
+            S'offrir un moment de détente hors du temps, loin de l'agitation dans une ambiance sereine et bienveillante.<br/>
+            L'argile en mode zen. Le plaisir simple de créer avec ses mains.
         </p>
+    </div>
+
+    <!-- Flèche vers le bas -->
+    <div class="hidden sm:flex items-center justify-center fixed bottom-6 right-6 z-50">
+        <a href="#atelier" aria-label="Aller plus bas">
+            <svg
+                    class="w-6 h-6 text-[#4b3b2a] animate-bounce drop-shadow-md"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </a>
     </div>
 </section>

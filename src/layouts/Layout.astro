@@ -2,16 +2,32 @@
 import '../styles/global.css'
 ---
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width"/>
-    <link rel="icon" type="image/svg+xml" href="/fee_au_tour_logo.jpg"/>
+    <link rel="icon" type="image/png" href="/assets/fee_au_tour_logo_color_transparantBG.png"/>
     <meta name="generator" content={Astro.generator}/>
     <title>Fée au tour</title>
 </head>
 <body>
 <slot/>
+<script is:inline>
+    let lastScrollTop = 0;
+    const header = document.getElementById('site-header');
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            header.classList.remove('-translate-y-full');
+        } else if (scrollTop < lastScrollTop) {
+            header.classList.add('-translate-y-full');
+        }
+
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+</script>
 </body>
 </html>
 
@@ -23,3 +39,4 @@ import '../styles/global.css'
         height: 100%;
     }
 </style>
+

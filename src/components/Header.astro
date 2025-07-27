@@ -1,18 +1,28 @@
-<header class="w-full px-6 py-2 flex items-center justify-between bg-white shadow-sm">
+<header
+        id="site-header"
+        class="fixed top-0 left-0 w-full px-6 py-4 flex items-center justify-between bg-white shadow-sm transform -translate-y-full transition-transform duration-300 z-50"
+>
     <div class="flex items-center">
         <!-- Logo -->
         <a href="/" class="flex items-center" aria-label="Accueil">
-            <img src="/fee_au_tour_logo_color_transparantBG.png" alt="Logo" class="h-18 w-auto object-contain"/>
+            <img
+                    src="/assets/fee_au_tour_logo_color_transparantBG.png"
+                    alt="Logo Fée au tour"
+                    class="h-14 w-auto object-contain"
+            />
         </a>
+
         <!-- Titre -->
-        <p class="text-text text-4xl md:text-5xl lg:text-6xl xl:text-[24px] leading-tight tracking-tight ml-4">
+        <p
+                class="text-primary-darker font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight ml-4 select-none"
+        >
             Fée au tour
         </p>
     </div>
 
     <!-- Navigation -->
-    <nav class="flex gap-6">
-        <a href="/" class="text-gray-800 hover:text-primary text-lg font-medium transition-colors">
+    <nav class="flex gap-8 text-primary-darker font-medium text-lg">
+        <a href="/" class="hover:text-primary transition-colors">
             Accueil
         </a>
     </nav>
