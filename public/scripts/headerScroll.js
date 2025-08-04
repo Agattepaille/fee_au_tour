@@ -1,16 +1,14 @@
-let lastScrollTop = 0;
-const headerScroll = document.getElementById('site-headerScroll');
+window.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('site-header');
+    const hero = document.getElementById('hero');
 
-window.addEventListener('scroll', () => {
-    const scrollTop = document.documentElement.scrollTop;
+    const heroBottom = () => hero?.getBoundingClientRect().bottom ?? 0;
 
-    if (scrollTop > lastScrollTop && scrollTop > 100) {
-        // Scroll vers le bas et plus de 100px -> afficher headerScroll
-        headerScroll.classList.remove('-translate-y-full');
-    } else if (scrollTop < lastScrollTop) {
-        // Scroll vers le haut -> cacher headerScroll
-        headerScroll.classList.add('-translate-y-full');
-    }
-
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    window.addEventListener('scroll', () => {
+        if (heroBottom() <= 0) {
+            header.classList.remove('-translate-y-full');
+        } else {
+            header.classList.add('-translate-y-full');
+        }
+    });
 });

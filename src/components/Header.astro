@@ -1,29 +1,25 @@
 <header
         id="site-header"
-        class="fixed top-0 left-0 w-full px-6 py-4 flex items-center justify-between bg-white shadow-sm transform -translate-y-full transition-transform duration-300 z-50"
+        class="fixed top-0 left-0 w-full px-4 sm:px-6 py-3 sm:py-3 flex items-center justify-between bg-white shadow-sm transform -translate-y-full transition-transform duration-300 z-50"
 >
     <div class="flex items-center">
-        <!-- Logo -->
         <a href="/" class="flex items-center" aria-label="Accueil">
             <img
                     src="/assets/fee_au_tour_logo_color_transparantBG.png"
-                    alt="Logo Fée au tour"
-                    class="h-14 w-auto object-contain"
+                    alt="Logo"
+                    class="h-10 sm:h-12 md:h-14 w-auto object-contain"
             />
         </a>
-
-        <!-- Titre -->
-        <p
-                class="text-primary-darker font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight ml-4 select-none"
-        >
-            Fée au tour
+        <p class="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-serif tracking-tight ml-4 select-none text-primary-darker">
+            Fée au Tour
         </p>
     </div>
 
-    <!-- Navigation -->
-    <nav class="flex gap-8 text-primary-darker font-medium text-lg">
-        <a href="/" class="hover:text-primary transition-colors">
-            Accueil
-        </a>
+    <nav class="hidden md:flex gap-6 text-primary-darker font-medium text-lg">
+        <a href="/" class="hover:text-primary transition-colors">Accueil</a>
     </nav>
+
+    <button class="md:hidden" aria-label="Menu">
+        <!-- Icone burger ici -->
+    </button>
 </header>
