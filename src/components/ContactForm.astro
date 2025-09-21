@@ -14,8 +14,17 @@
         <p class="text-center text-sm text-gray-600 mb-4">
             N'hésitez pas à m'écrire pour toute question, demande ou organisation d'atelier.
         </p>
-        <form name="contact" method="POST" class="space-y-3">
-            <input type="hidden" name="form-name" value="contact"/>
+        
+        <!-- Messages de statut -->
+        <div id="form-messages" class="hidden mb-4 p-3 rounded text-sm">
+            <div id="success-message" class="hidden bg-green-100 text-green-700 border border-green-300">
+                Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.
+            </div>
+            <div id="error-message" class="hidden bg-red-100 text-red-700 border border-red-300">
+            </div>
+        </div>
+        
+        <form id="contact-form" class="space-y-3">
 
             <div>
                 <label for="name" class="block text-xs font-medium text-gray-700">Nom</label>
@@ -54,11 +63,96 @@
 
             <button
                     type="submit"
+                    id="submit-btn"
                     class="w-full bg-primary text-white text-sm font-medium py-2 px-4 rounded
-               hover:bg-primary-hover transition"
+               hover:bg-primary-hover transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                Envoyer
+                <span id="btn-text">Envoyer</span>
+                <span id="btn-loading" class="hidden">Envoi en cours...</span>
             </button>
         </form>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contact-form') as HTMLFormElement;
+        const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+        const btnText = document.getElementById('btn-text');
+        const btnLoading = document.getElementById('btn-loading');
+        const formMessages = document.getElementById('form-messages');
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+
+        if (!form || !submitBtn || !btnText || !btnLoading || !formMessages || !successMessage || !errorMessage) {
+            console.error('Éléments du formulaire non trouvés');
+            return;
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Afficher l'état de chargement
+            submitBtn.disabled = true;
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            formMessages.classList.add('hidden');
+            
+            // Masquer les messages précédents
+            successMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            
+            try {
+                const formData = new FormData(form);
+                const data = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    message: formData.get('message')
+                };
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(data.email as string)) {
+                    errorMessage.innerHTML = 'Adresse email invalide';
+                    errorMessage.classList.remove('hidden');
+                    formMessages.classList.remove('hidden');
+                    console.error('Adresse email invalide');
+                    return;
+                }
+
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    // Succès
+                    form.reset();
+                    successMessage.classList.remove('hidden');
+                    formMessages.classList.remove('hidden');
+                } else {
+                    // Erreur
+                    errorMessage.innerHTML = 'Une erreur s\'est produite. Veuillez réessayer ou me contacter directement.';
+                    errorMessage.classList.remove('hidden');
+                    formMessages.classList.remove('hidden');
+                    console.error('Erreur:', result.error);
+                }
+            } catch (error) {
+                // Erreur réseau
+                errorMessage.innerHTML = 'Une erreur s\'est produite. Veuillez réessayer ou me contacter directement.';
+                errorMessage.classList.remove('hidden');
+                formMessages.classList.remove('hidden');
+                console.error('Erreur réseau:', error);
+            } finally {
+                // Réinitialiser l'état du bouton
+                submitBtn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        });
+    });
+</script>

@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.12.3",
     "astro-splide": "^2.0.0",
+    "resend": "^6.1.0",
     "tailwindcss": "^4.1.11"
   }
 }
